@@ -1,0 +1,11 @@
+{
+    "name": "prowess-ai",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "npm run dev --prefix client",
+        "build": "npm run build --prefix client",
+        "start": "npm run start --prefix client",
+        "install:all": "npm install --prefix client"
+    }
+}
