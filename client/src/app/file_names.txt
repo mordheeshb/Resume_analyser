@@ -1,0 +1,9 @@
+﻿C:\Users\mordh\Documents\mini project\client\src\app\(auth)
+C:\Users\mordh\Documents\mini project\client\src\app\dashboard
+C:\Users\mordh\Documents\mini project\client\src\app\favicon.ico
+C:\Users\mordh\Documents\mini project\client\src\app\file_names.txt
+C:\Users\mordh\Documents\mini project\client\src\app\globals.css
+C:\Users\mordh\Documents\mini project\client\src\app\layout.tsx
+C:\Users\mordh\Documents\mini project\client\src\app\page.tsx
+C:\Users\mordh\Documents\mini project\client\src\app\(auth)\login
+C:\Users\mordh\Documents\mini project\client\src\app\(auth)\signup

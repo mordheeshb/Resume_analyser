@@ -1,0 +1,107 @@
+﻿
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src
+
+
+Mode    LastWriteTime
+----    -------------
+d-----  20-02-2026   
+                23:42
+d-----  20-02-2026   
+                23:58
+d-----  20-02-2026   
+                23:58
+-a----  21-02-2026   
+                02:00
+
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src\app
+
+
+Mode    LastWriteTime
+----    -------------
+d-----  20-02-2026   
+                23:41
+d-----  21-02-2026   
+                01:53
+-a----  07-02-2026   
+                14:17
+-a----  21-02-2026   
+                01:53
+-a----  07-02-2026   
+                14:17
+-a----  21-02-2026   
+                00:54
+
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src\app\(aut
+    h)
+
+
+Mode    LastWriteTime
+----    -------------
+d-----  21-02-2026   
+                01:53
+d-----  21-02-2026   
+                01:53
+
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src\componen
+    ts
+
+
+Mode    LastWriteTime
+----    -------------
+d-----  21-02-2026   
+                00:00
+
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src\componen
+    ts\ui
+
+
+Mode    LastWriteTime
+----    -------------
+-a----  20-02-2026   
+                23:59
+-a----  20-02-2026   
+                23:58
+-a----  20-02-2026   
+                23:59
+-a----  21-02-2026   
+                00:00
+-a----  21-02-2026   
+                00:00
+-a----  20-02-2026   
+                23:59
+-a----  21-02-2026   
+                00:00
+
+
+    Directory: C:\Use
+    rs\mordh\Document
+    s\mini project\cl
+    ient\src\lib
+
+
+Mode    LastWriteTime
+----    -------------
+-a----  20-02-2026   
+                23:58
+
+

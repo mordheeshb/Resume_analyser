@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'NType 82 Mono';
+  src: url('https://nl.nothing.tech/cdn/shop/t/3/assets/NType82Mono-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'NType 82 Mono', var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: 'NType 82 Mono', var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  /* Light Mode Variables (Professional & Clean) */
+  --background: #fbfbfd;
+  --foreground: #1d1d1f;
+  --panel: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --panel-shadow: rgba(0, 0, 0, 0.05);
+
+  --ios-blue: #007AFF;
+  --ios-green: #34C759;
+  --ios-indigo: #5856D6;
+  --ios-orange: #FF9500;
+  --ios-pink: #FF2D55;
+  --ios-purple: #AF52DE;
+  --ios-red: #FF3B30;
+  --ios-teal: #5AC8FA;
+  --ios-yellow: #FFCC00;
+
+  --card: 255 255 255;
+  --card-foreground: 29 29 31;
+  --border: 0 0 0 / 0.08;
+
+  --mesh-opacity: 0.15;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #050505;
+    --foreground: #ffffff;
+    --panel: rgba(255, 255, 255, 0.03);
+    --panel-border: rgba(255, 255, 255, 0.1);
+    --panel-shadow: rgba(0, 0, 0, 0.5);
+
+    --ios-blue: #0A84FF;
+    --ios-green: #32D74B;
+    --ios-indigo: #64D2FF;
+    /* Slightly lighter for contrast */
+    --ios-orange: #FF9F0A;
+    --ios-pink: #FF375F;
+    --ios-purple: #BF5AF2;
+    --ios-red: #FF453A;
+    --ios-teal: #64D2FF;
+    --ios-yellow: #FFD60A;
+
+    --card: 15 15 15;
+    --card-foreground: 255 255 255;
+    --border: 255 255 255 / 0.1;
+
+    --mesh-opacity: 0.4;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@layer base {
+  * {
+    border-color: rgba(var(--border));
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+    font-family: 'NType 82 Mono', ui-monospace, monospace;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .glass-thin {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-regular {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-thick {
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid var(--glass-border);
+  }
+
+  .hyper-glass {
+    background: var(--panel);
+    backdrop-filter: blur(60px) saturate(220%);
+    -webkit-backdrop-filter: blur(60px) saturate(220%);
+    border: 1px solid var(--panel-border);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+  }
+
+  .mesh-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: var(--mesh-opacity);
+    background:
+      radial-gradient(at 0% 0%, var(--ios-blue) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--ios-indigo) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, var(--ios-pink) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, var(--ios-teal) 0px, transparent 50%),
+      var(--background);
+  }
+
+  .ios-shadow {
+    box-shadow: 0 8px 32px -4px var(--panel-shadow);
+  }
+
+  .ios-shadow-lg {
+    box-shadow: 0 24px 64px -12px var(--panel-shadow);
+  }
+
+  .ios-btn-primary {
+    background: var(--ios-blue);
+    color: white;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 14px 28px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(var(--ios-blue), 0.2);
+  }
+
+  .ios-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(var(--ios-blue), 0.4);
+    filter: brightness(1.1);
+  }
+
+  .ios-btn-primary:active {
+    opacity: 0.9;
+    transform: scale(0.97);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px var(--ios-blue);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
