@@ -42,7 +42,19 @@ if (!ACCESS_KEY || !SECRET_KEY) {
 
 const awsCredentials = ACCESS_KEY && SECRET_KEY
     ? { accessKeyId: ACCESS_KEY, secretAccessKey: SECRET_KEY }
-    : undefined;  // fall back to IAM role / instance profile if on AWS infra
+    : undefined;
+
+// Detailed logger for Amplify debugging
+function logAwsConfig() {
+    console.log("[/api/resume] ℹ️ Current Config:", {
+        REGION,
+        BUCKET,
+        TABLE,
+        HAS_ACCESS_KEY: !!ACCESS_KEY,
+        HAS_SECRET_KEY: !!SECRET_KEY,
+        ACCESS_KEY_START: ACCESS_KEY ? `${ACCESS_KEY.substring(0, 5)}...` : "none",
+    });
+}
 
 const s3 = new S3Client({
     region: REGION,
@@ -131,6 +143,15 @@ export async function POST(req: NextRequest) {
 
         const action: string = body?.action ?? "";
 
+        // ── Validation: Check for required AWS config ──────────────────────────
+        if (!ACCESS_KEY || !SECRET_KEY) {
+            logAwsConfig();
+            return err(
+                "AWS credentials missing. Please set APP_AWS_ACCESS_KEY_ID and " +
+                "APP_AWS_SECRET_ACCESS_KEY in Amplify Console → Hosting → Environment variables.",
+                500
+            );
+        }
         // ── ACTION: generateUploadUrl ─────────────────────────────────────────
         if (action === "generateUploadUrl") {
             const fileName = body.fileName ?? "resume.pdf";
