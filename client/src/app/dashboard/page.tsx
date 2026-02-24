@@ -260,9 +260,9 @@ export default function Dashboard() {
                 throw new Error(`S3 PUT HTTP ${s3Res.status}: ${s3Body}`);
             }
 
-            // ── STEP 3: Ask Lambda to analyse the uploaded resume ───────────
+            // ── STEP 3: Ask API to analyse the uploaded resume ──────────────
             setPhase("analyzing");
-            setPhaseDetail("Lambda is matching your skills against DynamoDB roles...");
+            setPhaseDetail("The AI Engine is matching your skills against industry roles...");
 
             const analysisPayload = await callApi("analyzeResume", {
                 action: "analyzeResume",

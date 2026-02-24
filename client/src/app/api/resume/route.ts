@@ -56,6 +56,14 @@ const dynamo = DynamoDBDocumentClient.from(
     })
 );
 
+// ── Global Cache ──────────────────────────────────────────────────────────────
+// This stays in memory across requests in Next.js dev and production.
+// It eliminates the ~1-2s delay of scanning DynamoDB on every analysis.
+let cachedRoles: Record<string, any>[] | null = null;
+
+// Pre-load unpdf to avoid dynamic import latency in the request path.
+const unpdfPromise = import("unpdf");
+
 // ── helpers ───────────────────────────────────────────────────────────────────
 
 /** Convert a Node.js Readable (AWS SDK v3) into a Buffer */
@@ -70,16 +78,22 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 
 /** Extract plain text from a PDF buffer using unpdf (no DOM required) */
 async function extractPdfText(buffer: Buffer): Promise<string> {
-    const { extractText } = await import("unpdf");
+    const { extractText } = await unpdfPromise;
     const uint8 = new Uint8Array(buffer);
     const { text } = await extractText(uint8, { mergePages: true });
     return typeof text === "string" ? text : (text as string[]).join(" ");
 }
 
-/** Scan all pages of a DynamoDB table */
+/** Scan all pages of a DynamoDB table with basic memory caching */
 async function scanAllRoles(): Promise<Record<string, any>[]> {
+    if (cachedRoles) {
+        console.log(`[resume] Using ${cachedRoles.length} roles from memory cache`);
+        return cachedRoles;
+    }
+
     const items: Record<string, any>[] = [];
     let lastKey: Record<string, any> | undefined;
+    console.log("[resume] Cache empty, scanning DynamoDB...");
     do {
         const resp = await dynamo.send(
             new ScanCommand({ TableName: TABLE, ExclusiveStartKey: lastKey })
@@ -87,6 +101,8 @@ async function scanAllRoles(): Promise<Record<string, any>[]> {
         items.push(...(resp.Items ?? []));
         lastKey = resp.LastEvaluatedKey as Record<string, any> | undefined;
     } while (lastKey);
+
+    cachedRoles = items;
     return items;
 }
 
