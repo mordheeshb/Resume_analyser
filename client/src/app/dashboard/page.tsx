@@ -193,9 +193,9 @@ export default function Dashboard() {
             };
         }
 
-        // Helper: POST to Lambda and unwrap the API Gateway proxy envelope
-        async function callLambda(label: string, payload: object): Promise<any> {
-            console.log(`[Lambda] ${label} →`, payload);
+        // Helper: POST to /api/resume (Next.js API route — plain JSON, no API Gateway wrapper)
+        async function callApi(label: string, payload: object): Promise<any> {
+            console.log(`[API] ${label} →`, payload);
             let res: Response;
             try {
                 res = await fetch(AWS_API_ENDPOINT, {
@@ -207,22 +207,19 @@ export default function Dashboard() {
                 throw new Error(`Network error on ${label}: ${netErr.message}`);
             }
             const rawText = await res.text();
-            console.log(`[Lambda] ${label} ← HTTP ${res.status}:`, rawText);
+            console.log(`[API] ${label} ← HTTP ${res.status}:`, rawText);
             if (!res.ok) {
-                throw new Error(`Lambda ${label} HTTP ${res.status}: ${rawText || "(empty)"}`);
+                throw new Error(`${label} failed (HTTP ${res.status}): ${rawText || "(empty response)"}`);
             }
-            let outer: any;
-            try { outer = JSON.parse(rawText); } catch { outer = {}; }
-            // API Gateway proxy: outer.body is the real JSON string
-            return typeof outer?.body === "string" ? JSON.parse(outer.body) : (outer?.body ?? outer);
+            try { return JSON.parse(rawText); } catch { return {}; }
         }
 
         try {
             // ── STEP 1: Get a pre-signed S3 upload URL ─────────────────────
             setPhase("requesting_url");
-            setPhaseDetail("Requesting secure upload URL from Lambda...");
+            setPhaseDetail("Requesting secure upload URL...");
 
-            const urlPayload = await callLambda("generateUploadUrl", {
+            const urlPayload = await callApi("generateUploadUrl", {
                 action: "generateUploadUrl",
                 fileName: selectedFile.name,
                 contentType: "application/pdf",
@@ -231,7 +228,7 @@ export default function Dashboard() {
             const uploadUrl: string = urlPayload?.uploadUrl ?? urlPayload?.upload_url ?? "";
             const fileKey: string = urlPayload?.fileKey ?? urlPayload?.file_key ?? "";
 
-            console.log("[Lambda] uploadUrl:", uploadUrl, "| fileKey:", fileKey);
+            console.log("[API] uploadUrl:", uploadUrl, "| fileKey:", fileKey);
 
             if (!uploadUrl || !fileKey) {
                 throw new Error(
@@ -267,7 +264,7 @@ export default function Dashboard() {
             setPhase("analyzing");
             setPhaseDetail("Lambda is matching your skills against DynamoDB roles...");
 
-            const analysisPayload = await callLambda("analyzeResume", {
+            const analysisPayload = await callApi("analyzeResume", {
                 action: "analyzeResume",
                 fileKey,
             });
@@ -609,8 +606,8 @@ export default function Dashboard() {
                                         onClick={() => setTargetRole(isSelected ? null : role)}
                                         whileTap={{ scale: 0.96 }}
                                         className={`px-4 py-2 rounded-xl text-[11px] font-bold transition-all border ${isSelected
-                                                ? "bg-[#4285F4] text-white border-[#4285F4] shadow-sm"
-                                                : "bg-gray-50 text-gray-500 border-gray-100 hover:border-[#4285F4]/30 hover:text-[#4285F4] hover:bg-[#4285F4]/5"
+                                            ? "bg-[#4285F4] text-white border-[#4285F4] shadow-sm"
+                                            : "bg-gray-50 text-gray-500 border-gray-100 hover:border-[#4285F4]/30 hover:text-[#4285F4] hover:bg-[#4285F4]/5"
                                             }`}
                                     >
                                         {role}
