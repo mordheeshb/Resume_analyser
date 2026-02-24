@@ -45,26 +45,6 @@ export default function LandingPage() {
           </motion.div>
         </section>
 
-        {/* ================= TRUST SECTION ================= */}
-        <section className="py-12 text-center border-y border-gray-50 bg-gray-50/30">
-          <p className="text-sm font-medium text-gray-400 mb-6 uppercase tracking-widest">
-            Empowering professionals worldwide
-          </p>
-          <div className="flex flex-wrap justify-center gap-12 text-gray-400 font-medium">
-            <div className="flex flex-col items-center">
-              <span className="text-2xl text-gray-900">10,000+</span>
-              <span className="text-xs">Resumes Analyzed</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-2xl text-gray-900">95%</span>
-              <span className="text-xs">Accuracy Rate</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-2xl text-gray-900">Elite</span>
-              <span className="text-xs">Career Insights</span>
-            </div>
-          </div>
-        </section>
 
         {/* ================= FEATURES ================= */}
         <section id="features" className="py-32 px-6">
