@@ -1,132 +1,162 @@
 "use client";
 
-import Link from "next/link";
+import Layout from "../components/Layout";
 import { motion } from "framer-motion";
-import { Brain, Rocket, Award, ShieldCheck, ArrowRight, Zap, Target } from "lucide-react";
+import { ArrowRight, Zap, Target, Rocket, Upload, BarChart3, CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#0A84FF]/30 font-sans overflow-hidden">
-      {/* Dark Mesh Gradient */}
-      <div className="mesh-gradient opacity-40" />
-
-      {/* Navigation */}
-      <nav className="max-w-7xl mx-auto px-8 py-10 flex justify-between items-center glass-thick rounded-[32px] border border-white/5 sticky top-6 z-50 mx-6 ios-shadow-lg">
-        <div className="flex items-center gap-4 text-3xl font-[1000] tracking-tighter">
-          <div className="bg-gradient-to-br from-[#0A84FF] to-[#5E5CE6] p-2 rounded-xl shadow-[0_0_15px_rgba(10,132,255,0.4)]">
-            <Brain className="w-8 h-8 text-white" />
-          </div>
-          PROWESS.AI
-        </div>
-        <div className="hidden md:flex gap-10 font-black text-[11px] uppercase tracking-[0.3em] text-white/30">
-          <Link href="#features" className="hover:text-white transition-colors">CAPABILITIES</Link>
-          <Link href="#methodology" className="hover:text-white transition-colors">INTEL_LOGIC</Link>
-          <Link href="#enterprise" className="hover:text-white transition-colors">CLUSTER_ACCESS</Link>
-        </div>
-        <div className="flex gap-6">
-          <Link href="/login">
-            <button className="px-8 py-3 text-sm font-black uppercase tracking-widest text-white/60 hover:text-white transition-all">SYSTEM_ENTRY</button>
-          </Link>
-          <Link href="/signup">
-            <button className="px-8 py-3 bg-[#0A84FF] text-white text-sm font-black rounded-2xl hover:shadow-[0_0_25px_rgba(10,132,255,0.4)] hover:scale-105 transition-all uppercase tracking-widest">INIT_ID</button>
-          </Link>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-48 px-8 overflow-hidden">
-        <div className="absolute top-20 right-0 w-[800px] h-[800px] bg-[#0A84FF]/5 rounded-full blur-[150px] -z-10 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#BF5AF2]/5 rounded-full blur-[150px] -z-10"></div>
-
-        <div className="max-w-6xl mx-auto text-center">
+    <Layout>
+      <div className="relative z-10">
+        {/* ================= HERO ================= */}
+        <section className="pt-24 pb-20 px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-6 py-2 rounded-full glass-thin border border-[#0A84FF]/20 text-[#0A84FF] text-[10px] font-black tracking-[0.4em] uppercase mb-10 glow-text"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto"
           >
-            QUANTUM_ENGINE_V.4.2_ACTIVE
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-7xl md:text-9xl font-[1000] tracking-tighter leading-[0.85] mb-12 uppercase"
-          >
-            DECRYPT YOUR <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A84FF] via-[#5E5CE6] to-[#BF5AF2] animate-gradient-x">CAREER_DNA.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-2xl text-white/40 max-w-3xl mx-auto mb-16 font-medium leading-relaxed"
-          >
-            Execute high-fidelity skill normalization and match with elite industry nodes
-            using the world's most advanced AI matching architecture.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="flex flex-col md:flex-row gap-8 justify-center items-center"
-          >
-            <Link href="/signup">
-              <button className="px-12 py-6 bg-white text-black text-xl font-[1000] rounded-[24px] flex items-center gap-4 group hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:-translate-y-1 transition-all uppercase tracking-tight">
-                EXEC_ANALYSIS <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </button>
-            </Link>
-            <div className="flex flex-col items-center md:items-start gap-2">
-              <div className="flex -space-x-4">
-                {[1, 2, 3, 4, 5].map(i => (
-                  <div key={i} className="w-12 h-12 rounded-full border-[3px] border-[#050505] bg-white/10 flex items-center justify-center text-[10px] font-black glass-thin">ID</div>
-                ))}
-              </div>
-              <div className="text-[11px] font-black text-white/20 uppercase tracking-[0.2em]">+ 12.4k OPERATIONAL_NODES</div>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8">
+              Smarter Resume Analysis <br />
+              <span className="text-gradient">
+                Powered by AI
+              </span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-12 leading-relaxed">
+              Understand your strengths, fix your gaps, and get a personalized
+              roadmap to land better opportunities — faster.
+            </p>
+
+            <div className="flex justify-center gap-4 flex-wrap">
+              <Link href="/signup">
+                <button className="px-8 py-4 bg-[#202124] text-white rounded-full text-lg font-medium shadow-lg hover:bg-black transition-all flex items-center gap-3 group">
+                  Analyze My Resume <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </Link>
+
+              <Link href="#how">
+                <button className="px-8 py-4 bg-white border border-gray-200 rounded-full text-lg font-medium hover:bg-gray-50 transition-all">
+                  See How It Works
+                </button>
+              </Link>
             </div>
           </motion.div>
-        </div>
-      </section>
+        </section>
 
-      {/* Feature Grid */}
-      <section id="features" className="py-48 relative border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              { icon: <Zap className="w-8 h-8 text-[#FF9F0A]" />, title: "NEUTRON_SYNC", desc: "Normalization of 50k+ skill variants in under 800ms." },
-              { icon: <Target className="w-8 h-8 text-[#0A84FF]" />, title: "CORE_MATCH", desc: "Cluster-based alignment with Fortune 500 technical stacks." },
-              { icon: <Rocket className="w-8 h-8 text-[#BF5AF2]" />, title: "ORBITAL_PATH", desc: "Automated career trajectory generation via recursive LLM analysis." }
-            ].map((f, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -15, backgroundColor: "rgba(255,255,255,0.04)" }}
-                className="glass-thick p-14 rounded-[56px] border border-white/5 transition-all duration-700 hover:border-white/10 group"
-              >
-                <div className="w-20 h-20 bg-white/5 rounded-[28px] flex items-center justify-center mb-10 border border-white/5 group-hover:scale-110 transition-transform duration-700 shadow-inner shadow-white/5">
-                  {f.icon}
-                </div>
-                <h3 className="text-3xl font-[1000] mb-6 uppercase tracking-tight">{f.title}</h3>
-                <p className="text-white/40 leading-relaxed text-lg font-medium">{f.desc}</p>
-              </motion.div>
-            ))}
+        {/* ================= TRUST SECTION ================= */}
+        <section className="py-12 text-center border-y border-gray-50 bg-gray-50/30">
+          <p className="text-sm font-medium text-gray-400 mb-6 uppercase tracking-widest">
+            Empowering professionals worldwide
+          </p>
+          <div className="flex flex-wrap justify-center gap-12 text-gray-400 font-medium">
+            <div className="flex flex-col items-center">
+              <span className="text-2xl text-gray-900">10,000+</span>
+              <span className="text-xs">Resumes Analyzed</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl text-gray-900">95%</span>
+              <span className="text-xs">Accuracy Rate</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl text-gray-900">Elite</span>
+              <span className="text-xs">Career Insights</span>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-48 px-8 border-t border-white/5">
-        <div className="max-w-7xl mx-auto rounded-[64px] bg-gradient-to-br from-[#0A84FF] to-[#0A84FF]/20 p-24 md:p-32 text-center text-white relative overflow-hidden ios-shadow-lg">
-          <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 blur-[100px] rounded-full"></div>
+        {/* ================= FEATURES ================= */}
+        <section id="features" className="py-32 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+              <p className="text-gray-500">Everything you need to level up your career</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {([
+                {
+                  icon: <Zap className="w-6 h-6 text-[#FBBC05]" />,
+                  title: "Instant Skill Analysis",
+                  desc: "Our AI engine detects your core strengths and identifies critical skill gaps in seconds."
+                },
+                {
+                  icon: <Target className="w-6 h-6 text-[#4285F4]" />,
+                  title: "Precision Roadmap",
+                  desc: "Receive a step-by-step personalized learning plan tailored to your dream career goals."
+                },
+                {
+                  icon: <Rocket className="w-6 h-6 text-[#34A853]" />,
+                  title: "Smart Role Matching",
+                  desc: "Instantly see which high-impact job roles perfectly align with your current experience."
+                }
+              ]).map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="p-8 bg-white rounded-3xl border border-gray-100 google-shadow-hover transition-all"
+                >
+                  <div className="bg-gray-50 w-12 h-12 rounded-2xl flex items-center justify-center mb-6">{item.icon}</div>
+                  <h3 className="text-xl font-bold mb-3 text-gray-900">{item.title}</h3>
+                  <p className="text-gray-500 leading-relaxed text-sm">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          <h2 className="text-5xl md:text-7xl font-[1000] mb-12 relative z-10 uppercase tracking-tighter">ELIMINATE_UNCERTAINTY.</h2>
-          <p className="text-2xl text-white/70 mb-16 max-w-2xl mx-auto relative z-10 font-medium italic">Join the elite engineering 0.1% who use Prowess.AI to dominate technical matching.</p>
-          <Link href="/signup">
-            <button className="px-14 py-7 bg-white text-[#0A84FF] text-2xl font-[1000] rounded-full hover:scale-110 shadow-2xl transition-all relative z-10 uppercase tracking-tight">
-              INIT_FREE_VECTORS
-            </button>
-          </Link>
-        </div>
-      </section>
+        {/* ================= HOW IT WORKS ================= */}
+        <section id="how" className="py-32 bg-gray-900 text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#4285F4]/10 rounded-full blur-[100px]" />
+          <div className="max-w-5xl mx-auto text-center px-6 relative z-10">
+            <h2 className="text-4xl font-bold mb-16">
+              Three Steps to Success
+            </h2>
 
-      <footer className="py-20 px-8 border-t border-white/5 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em]">
-        © 2026 PROWESS.AI // CORE_ENGINE_V.4.2 // SECURE_NODE_ALPHA
-      </footer>
-    </div>
+            <div className="grid md:grid-cols-3 gap-12">
+              {([
+                { icon: <Upload className="w-8 h-8" />, title: "Upload", text: "Securely upload your resume in PDF format." },
+                { icon: <BarChart3 className="w-8 h-8" />, title: "Analyze", text: "AI deep-dives into your professional profile." },
+                { icon: <CheckCircle className="w-8 h-8" />, title: "Succeed", text: "Follow your custom-built roadmap to success." },
+              ]).map((step, i) => (
+                <div key={i} className="flex flex-col items-center gap-6">
+                  <div className="bg-white/10 p-5 rounded-3xl text-white backdrop-blur-md border border-white/10">
+                    {step.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">{step.title}</h4>
+                    <p className="text-gray-400 text-sm leading-relaxed">{step.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================= FINAL CTA ================= */}
+        <section className="py-32 px-6 text-center">
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#4285F4] to-[#34A853] p-16 rounded-[40px] text-white shadow-2xl">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+              Your next opportunity <br /> is one upload away.
+            </h2>
+            <p className="text-white/80 mb-12 text-lg">Join thousands of professionals already using AI to stay ahead.</p>
+
+            <Link href="/signup">
+              <button className="px-12 py-5 bg-white text-gray-900 rounded-full font-bold text-lg google-shadow hover:scale-105 transition-all">
+                Get Started for Free
+              </button>
+            </Link>
+          </div>
+        </section>
+
+        {/* ================= FOOTER ================= */}
+        <footer className="py-12 border-t border-gray-100 text-center text-sm text-gray-400">
+          <p>© {new Date().getFullYear()} Resume AI. All rights reserved.</p>
+        </footer>
+      </div>
+    </Layout>
   );
 }

@@ -26,9 +26,32 @@ import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 const REGION = process.env.AWS_REGION ?? "ap-southeast-2";
 const BUCKET = process.env.S3_BUCKET_NAME ?? "resume-analyzer-mordheesh-2026";
 const TABLE = process.env.DYNAMODB_TABLE_NAME ?? "JobRoles";
+const ACCESS_KEY = process.env.AWS_ACCESS_KEY_ID;
+const SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 
-const s3 = new S3Client({ region: REGION });
-const dynamo = DynamoDBDocumentClient.from(new DynamoDBClient({ region: REGION }));
+// Validate credentials at startup so any missing var is obvious in logs
+if (!ACCESS_KEY || !SECRET_KEY) {
+    console.error(
+        "[/api/resume] ⚠️  Missing AWS credentials in .env.local.\n" +
+        "  Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY then restart the dev server."
+    );
+}
+
+const awsCredentials = ACCESS_KEY && SECRET_KEY
+    ? { accessKeyId: ACCESS_KEY, secretAccessKey: SECRET_KEY }
+    : undefined;  // fall back to IAM role / instance profile if on AWS infra
+
+const s3 = new S3Client({
+    region: REGION,
+    ...(awsCredentials && { credentials: awsCredentials }),
+});
+
+const dynamo = DynamoDBDocumentClient.from(
+    new DynamoDBClient({
+        region: REGION,
+        ...(awsCredentials && { credentials: awsCredentials }),
+    })
+);
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
