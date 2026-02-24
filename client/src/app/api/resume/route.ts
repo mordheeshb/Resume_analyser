@@ -23,18 +23,20 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
 // ── AWS config ────────────────────────────────────────────────────────────────
-const REGION = process.env.AWS_REGION ?? "ap-southeast-2";
-const BUCKET = process.env.S3_BUCKET_NAME ?? "resume-analyzer-mordheesh-2026";
-const TABLE = process.env.DYNAMODB_TABLE_NAME ?? "JobRoles";
-const ACCESS_KEY = process.env.AWS_ACCESS_KEY_ID || "";
-const SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY || "";
+// Amplify blocks "AWS_" prefix, so we use "APP_AWS_" on Amplify.
+// Local dev (.env.local) still uses AWS_ names — both are checked.
+const REGION = process.env.APP_AWS_REGION || process.env.AWS_REGION || "ap-southeast-2";
+const BUCKET = process.env.S3_BUCKET_NAME || "resume-analyzer-mordheesh-2026";
+const TABLE = process.env.DYNAMODB_TABLE_NAME || "JobRoles";
+const ACCESS_KEY = process.env.APP_AWS_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID || "";
+const SECRET_KEY = process.env.APP_AWS_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY || "";
 
 // Log on cold start so you can check Amplify CloudWatch logs
 if (!ACCESS_KEY || !SECRET_KEY) {
     console.error(
         "[/api/resume] ⚠️  AWS credentials are MISSING.\n" +
-        "  Go to Amplify Console → App settings → Environment variables and add:\n" +
-        "  AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, S3_BUCKET_NAME, DYNAMODB_TABLE_NAME"
+        "  In Amplify Console → Hosting → Environment variables, add:\n" +
+        "  APP_AWS_ACCESS_KEY_ID, APP_AWS_SECRET_ACCESS_KEY, APP_AWS_REGION, S3_BUCKET_NAME, DYNAMODB_TABLE_NAME"
     );
 }
 
