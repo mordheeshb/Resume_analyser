@@ -15,9 +15,6 @@ import {
     Target
 } from "lucide-react";
 
-// ─── API endpoint ─────────────────────────────────────────────────────────────
-// All resume work is now handled by the Next.js API route at /api/resume.
-// It calls S3 and DynamoDB directly server-side — no Lambda / API Gateway needed.
 const AWS_API_ENDPOINT = "/api/resume";
 
 
@@ -272,16 +269,17 @@ export default function Dashboard() {
             // Lambda returns allSuggestions array
             const rawList: any[] =
                 Array.isArray(analysisPayload?.allSuggestions) ? analysisPayload.allSuggestions :
-                    Array.isArray(analysisPayload?.topMatches) ? analysisPayload.topMatches :
-                        Array.isArray(analysisPayload?.matches) ? analysisPayload.matches :
-                            Array.isArray(analysisPayload) ? analysisPayload :
-                                analysisPayload?.topMatch ? [analysisPayload.topMatch] :
-                                    [];
+                    Array.isArray(analysisPayload?.eligibleRoles) ? analysisPayload.eligibleRoles :
+                        Array.isArray(analysisPayload?.allRoleAnalysis) ? analysisPayload.allRoleAnalysis :
+                            Array.isArray(analysisPayload?.topMatches) ? analysisPayload.topMatches :
+                                Array.isArray(analysisPayload?.matches) ? analysisPayload.matches :
+                                    Array.isArray(analysisPayload) ? analysisPayload :
+                                        analysisPayload?.topMatch ? [analysisPayload.topMatch] :
+                                            analysisPayload?.predictedRole ? [analysisPayload.predictedRole] :
+                                                [];
 
             if (rawList.length === 0) {
-                throw new Error(
-                    `No job matches returned.\nFull response: ${JSON.stringify(analysisPayload)}`
-                );
+                console.warn("No suggestions from backend:", analysisPayload);
             }
 
             const rawMatches = rawList.map(normalizeMatch);

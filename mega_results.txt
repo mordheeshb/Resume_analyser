@@ -1,0 +1,10 @@
+﻿Payload: {"action":"generateUploadUrl"} => 400 {"error": "Invalid action"}
+Payload: {"action":"analyzeResume"} => 400 {"error": "fileKey is required"}
+Payload: {"Action":"generateUploadUrl"} => 400 {"error": "Invalid action"}
+Payload: {"action":"upload"} => 400 {"error": "Invalid action"}
+Payload: {"action":"UPLOAD"} => 400 {"error": "Invalid action"}
+Payload: {"type":"generateUploadUrl"} => 400 {"error": "Invalid action"}
+Payload: {"operation":"generateUploadUrl"} => 400 {"error": "Invalid action"}
+Payload: {"body":"{\"action\":\"generateUploadUrl\"}"} => 400 {"error": "Invalid action"}
+Payload: {"action":"GET_UPLOAD_URL"} => 400 {"error": "Invalid action"}
+Payload: {"action":"ANALYZE"} => 400 {"error": "Invalid action"}

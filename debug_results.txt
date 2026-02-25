@@ -1,0 +1,7 @@
+﻿Starting probe...
+Payload: {"action":"generateUploadUrl"} => Status: 400, Body: {"error": "Invalid action"}
+Payload: {"action":"analyzeResume"} => Status: 400, Body: {"error": "fileKey is required"}
+Payload: {"Action":"generateUploadUrl"} => Status: 400, Body: {"error": "Invalid action"}
+Payload: {"type":"generateUploadUrl"} => Status: 400, Body: {"error": "Invalid action"}
+Payload: {"body":"{\"action\":\"generateUploadUrl\"}"} => Status: 400, Body: {"error": "Invalid action"}
+Payload: {"body":{"action":"generateUploadUrl"}} => Status: 400, Body: {"error": "Invalid action"}

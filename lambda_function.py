@@ -74,12 +74,25 @@ def lambda_handler(event, context):
         if event.get("httpMethod") == "OPTIONS":
             return {"statusCode": 200, "headers": cors_headers(), "body": ""}
 
-        # Parse body — API Gateway sends it as a JSON string
-        body = json.loads(event["body"]) if "body" in event else event
+        # Parse body — handle both Proxy and non-Proxy integrations
+        if "body" in event:
+            # For API Gateway Proxy Integration, event['body'] is a string (possibly base64)
+            body_content = event.get("body", "{}")
+            if event.get("isBase64Encoded"):
+                import base64
+                body_content = base64.b64decode(body_content).decode('utf-8')
+            
+            try:
+                body = json.loads(body_content) if isinstance(body_content, str) else body_content
+            except Exception:
+                body = {} # Fallback if JSON parsing fails
+        else:
+            # For non-Proxy or direct Lambda calls
+            body = event
+
         action = body.get("action", "")
 
         # ── ACTION: generateUploadUrl ─────────────────────────────────────
-        # Generates a pre-signed S3 PUT URL so the browser can upload directly.
         if action == "generateUploadUrl":
             file_name = body.get("fileName", "resume.pdf")
             file_key = f"resumes/{uuid.uuid4()}-{file_name}"
@@ -91,7 +104,7 @@ def lambda_handler(event, context):
                     "Key": file_key,
                     "ContentType": "application/pdf"
                 },
-                ExpiresIn=300  # URL valid for 5 minutes
+                ExpiresIn=300
             )
 
             return {
@@ -101,7 +114,6 @@ def lambda_handler(event, context):
             }
 
         # ── ACTION: analyzeResume ─────────────────────────────────────────
-        # Downloads the uploaded PDF from S3 and matches skills vs DynamoDB.
         elif action == "analyzeResume":
             file_key = body.get("fileKey")
             if not file_key:
@@ -111,17 +123,15 @@ def lambda_handler(event, context):
                     "body": json.dumps({"error": "fileKey is required"})
                 }
 
-            # Download resume from S3
             file_obj = s3.get_object(Bucket=BUCKET_NAME, Key=file_key)
             file_bytes = file_obj["Body"].read()
             resume_text = extract_text_from_pdf(file_bytes)
 
-            # Fetch all job roles from DynamoDB
             items = scan_all_roles()
             suggestions = []
 
             for item in items:
-                role_name = item.get("roleName")
+                role_name = item.get("roleName", item.get("role", "Unknown"))
                 role_skills = item.get("skills", [])
                 if not role_skills:
                     continue
@@ -137,7 +147,6 @@ def lambda_handler(event, context):
                     "missingSkills": missing_skills
                 })
 
-            # Sort highest match first
             suggestions.sort(key=lambda x: x["matchPercentage"], reverse=True)
             top_match = suggestions[0] if suggestions else None
 
@@ -152,12 +161,17 @@ def lambda_handler(event, context):
             return {
                 "statusCode": 400,
                 "headers": cors_headers(),
-                "body": json.dumps({"error": f"Unknown action: '{action}'. Use generateUploadUrl or analyzeResume."})
+                "body": json.dumps({
+                    "error": f"Unknown action: '{action}'",
+                    "received_payload": body,
+                    "valid_actions": ["generateUploadUrl", "analyzeResume"]
+                })
             }
 
     except Exception as e:
+        import traceback
         return {
             "statusCode": 500,
             "headers": cors_headers(),
-            "body": json.dumps({"error": str(e)})
+            "body": json.dumps({"error": str(e), "trace": traceback.format_exc()})
         }

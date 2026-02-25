@@ -1,0 +1,5 @@
+﻿Action: generateUploadUrl | Status: 400 | Body: {"error": "Invalid action"}
+Action: getUploadUrl | Status: 400 | Body: {"error": "Invalid action"}
+Action: uploadUrl | Status: 400 | Body: {"error": "Invalid action"}
+Action: generate_upload_url | Status: 400 | Body: {"error": "Invalid action"}
+Action: upload | Status: 400 | Body: {"error": "Invalid action"}
